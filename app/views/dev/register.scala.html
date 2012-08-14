@@ -1,0 +1,128 @@
+@(signupForm: Form[User], user: User)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+<head>
+	<!-- Meant for stylesheet from bootstrap. Thank you bootstrap. I owe you one. -->
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")" />
+
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-responsive.min.css")" />
+
+
+</head>
+
+@if(user == null){
+@main("Register for PacTrac") {
+	<!-- Navbar -->
+	<div class="navbar navbar-fixed-top">
+	      <div class="navbar-inner">
+	        <div class="container">
+	          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </a>
+	          <a class="brand" href="/">PacTrac</a>
+	          <div class="nav-collapse">
+	            <ul class="nav">
+	              <li><a href="/">Home</a></li>
+	              <li><a href="../about.html">About</a></li>
+	              <li><a href="#download">Download</a></li>
+	              <li><a href="#contact">Contact</a></li>
+	            </ul>
+	            <a class="btn btn-success" href="login.html">Sign in</a>
+             	<a class="btn btn-primary disabled">Sign up</a>
+	          </div><!--/.nav-collapse -->
+	        </div>
+	      </div>
+	</div>
+
+	    <div class="container">
+			<div class="hero-unit">
+        		<h1>Register now!</h1>
+        		<p>It'll only take you five minutes!</p>
+        	</div>
+              <div class="row">
+
+        <div class="span4">
+        @helper.form(action = routes.RegisterController.register(), 'class -> "well"){
+        <fieldset>
+        	<legend>Account information</legend>
+        	@inputText(
+        		signupForm("username"),
+        		'_label -> "Email",
+        		'_help -> "Please choose a valid email",
+        		'_error -> signupForm.globalError
+        		)
+        	@inputText(
+        		signupForm("firstName"),
+        		'_label -> "First name",
+        		'_help -> "Please give us your first name",
+        		'_error -> "You need to have a first name..."
+        	)
+        	@inputText(
+        		signupForm("lastName"),
+        		'_label -> "Last name",
+        		'_help -> "Please give us your last name",
+        		'_error -> "You need to have a last name..."
+        	)
+        	@inputPassword(
+        		signupForm("password"),
+        		'_label -> "Password",
+        		'_help -> "A password must be at least six characters long"
+        	)
+        	@inputPassword(
+        		signupForm("repeatPassword"),
+        		'_label -> "Repeat the password",
+        		'_help -> "Please repeat your password (So you can't yell at us if you forget it)",
+        		'_error -> signupForm.error("password")
+        	)
+    }
+    	<input type="submit" class="btn btn-primary" value="Register!">
+        </fieldset>
+
+</div>
+<div class="span8">
+	<h3>Why do we make you sign up?</h3>
+</br>
+</br>
+<p>That's an awesome question!</p>
+	</div>
+</div>
+</div>
+}
+}else{
+    @main("Trying to register for PacTrac") {
+    <!-- Navbar -->
+    <div class="navbar navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </a>
+              <a class="brand" href="/">PacTrac</a>
+              <div class="nav-collapse">
+                <ul class="nav">
+                  <li><a href="/">Home</a></li>
+                  <li><a href="../about.html">About</a></li>
+                  <li><a href="#download">Download</a></li>
+                  <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a class="btn btn-success" href="login.html">Sign in</a>
+                <a class="btn btn-primary disabled">Sign up</a>
+              </div><!--/.nav-collapse -->
+            </div>
+          </div>
+    </div>
+
+        <div class="container">
+            <div class="hero-unit">
+                <h1>Hahahahaha!</h1>
+                <p>You thought you could just register again...we're not that dumb.</p>
+            </div>
+        </div>
+}
+}

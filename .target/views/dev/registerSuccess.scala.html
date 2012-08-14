@@ -1,0 +1,62 @@
+@(user: User)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+<head>
+	<!-- Meant for stylesheet from bootstrap. Thank you bootstrap. I owe you one. -->
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")" />
+
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-responsive.min.css")" />
+
+
+</head>
+
+@main("Successfully created a PacTrac account!"){
+	<div class="navbar navbar-fixed-top">
+	      <div class="navbar-inner">
+	        <div class="container">
+	          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </a>
+	          <a class="brand" href="/">PacTrac</a>
+	          <div class="nav-collapse">
+	            <ul class="nav">
+	              <li><a href="/">Home</a></li>
+	              <li><a href="../about.html">About</a></li>
+	              <li><a href="#download">Download</a></li>
+	              <li><a href="#contact">Contact</a></li>
+	            </ul>
+	            <a class="btn btn-success" href="/dev/login.html">Sign in</a>
+             	<a class="btn btn-primary disabled">Sign up</a>
+	          </div><!--/.nav-collapse -->
+	        </div>
+	      </div>
+	</div>
+
+	    <div class="container">
+			<div class="hero-unit">
+        		<h1>You successfully registered at PacTrac!</h1>
+        		<p>Yay! Welcome to the PacTrac community. We're sure you'll love PacTrac, and to start you off, we have these 
+        			<a href="#nicetutorials">nice tutorials</a> 
+        			to help you set up our service!</p>
+        	</div>
+              <div class="row">
+              	<div class="span12">
+              		<fieldset>
+              			<legend>Making sure we got your info right...</legend>
+              			<h4>Email</h4>
+              			<p>@user.getUsername()</p>
+              			<h4>First name</h4>
+              			<p>@user.getFirstName()</p>
+              			<h4>Last name</h4>
+              			<p>@user.getLastName()</p>
+              			<h4>Password</h4>
+              			<p>You thought we'd really say that here?</p>
+              		</fieldset>
+              	</div>
+              </div>
+          </div>
+}

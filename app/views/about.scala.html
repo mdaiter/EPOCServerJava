@@ -1,0 +1,114 @@
+@(user: User)
+
+@import helper._;
+
+<head>
+	<!-- Meant for stylesheet from bootstrap. Thank you bootstrap. I owe you one. -->
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")" />
+
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-responsive.min.css")" />
+
+
+</head>
+
+@main("About PacTrac") {
+
+
+	<!-- Navbar -->
+	<div class="navbar navbar-fixed-top">
+	      <div class="navbar-inner">
+	        <div class="container">
+	          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </a>
+	          <a class="brand" href="/">PacTrac</a>
+	          <div class="nav-collapse">
+	            <ul class="nav">
+	              <li><a href="/">Home</a></li>
+	              <li class="active"><a href="about.html">About</a></li>
+	              <li><a href="#download">Download</a></li>
+	              <li><a href="#contact">Contact</a></li>
+	            </ul>
+            @if(user != null){
+            <a class="btn btn-success disabled">Sign in</a>
+            <a class="btn btn-success" href="/dev/logout.html">Logout</a>
+            <a class="btn btn-primary disabled">Sign up</a>
+          }else{
+          <a class="btn btn-success" href="/dev/login.html">Sign in</a>
+          <a class="btn btn-primary" href="/dev/register.html">Sign up</a>
+        }
+             <ul class="nav pull-right">
+            @if(user != null){
+            <dt>Welcome, @user.getFirstName() @user.getLastName()</dt>
+            }
+          </ul>
+	          </div><!--/.nav-collapse -->
+	        </div>
+	      </div>
+	    </div>
+	</div>
+
+	<div class="container">
+		 <div class="hero-unit">
+        <h1>Why use PacTrac?</h1>
+        <p>It's the question everyone's asking!</p>
+      </div>
+      <div class="row">
+        <div class="span6">
+          <h2>For entrepreneurs</h2>
+           <p>So you have a shiny new app on the marketplace. The next big thing to dominate the <a href="http://www.apple.com/osx/apps/app-store.html">Mac App Store</a>. But you haven't been reigning over the marketplace like you'd hoped. Nothing makes sense anymore. Why aren't you reaping in the downloads you deserve? That's where we come in. With an easy integration into your app and cloud-based sending and retrieving of live-time user data, we keep track of which apps your users love and hate. So when they have Rival Company X's app open, you can see that. When your company releases an update to your software, you can see what people think of it in live-time. Let PacTrac help you (and take away those sleepless pre-release nights).
+           </p>
+        </div>
+        <div class="span6">
+        	<video width="480" height="320" controls="controls">
+        		Browser
+        	</video>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span6">
+          <video width="480" height="320" controls="controls">
+        		Browser
+        	</video>
+        </div>
+        <div class="span6">
+        	<h2>For developers</h2>
+           <p>
+           	We know how hard it is to process a ton of data coming from multiple sources in order to use said data effectively. Trust us, we've tried. Actually, we planned on making this a desktop SDK, but decided that it would be too mard to set up and display data. So, this can help take in data from multiple sources and return whatever small detail you need.
+           </br>
+           Say, for example, you want to suggest different applications to open after a certain period of time. With live-time monitoring of clients' open applications and document types on their computers, you can actually do that (see the video to the right)!
+       		</br>
+       		So, you can more quickly and effectively develop your app, using whatever tools possible to do so, not having to worry about organizing data.
+           </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span6">
+          <h2>For user quality departments</h2>
+           <p>So you have a shiny new app on the marketplace. The next big thing to dominate the <a href="http://www.apple.com/osx/apps/app-store.html">Mac App Store</a>. But you haven't been reigning over the marketplace like you'd hoped. Nothing makes sense anymore. Why aren't you reaping in the downloads you deserve? That's where we come in. With an easy integration into your app and cloud-based sending and retrieving of live-time user data, we keep track of which apps your users love and hate. So when they have Rival Company X's app open, you can see that. When your company releases an update to your software, you can see what people think of it in live-time. Let PacTrac help you (and take away those sleepless pre-release nights).
+           </p>
+        </div>
+        <div class="span6">
+        	<video width="480" height="320" controls="controls">
+        		Browser
+        	</video>
+        </div>
+      </div>
+	</div>
+
+
+<script src="@routes.Assets.at("javascripts/bootstrap-alert.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-button.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-carousel.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-collapse.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-dropdown.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-modal.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-popover.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-scrollspy.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-tab.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-tooltip.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-transition.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-typeahead.min.js")"></script>
+}

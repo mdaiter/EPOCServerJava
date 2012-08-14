@@ -1,0 +1,234 @@
+@(user: User)
+
+@import helper._;
+
+<head>
+	<!-- Meant for stylesheet from bootstrap. Thank you bootstrap. I owe you one. -->
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")" />
+
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-responsive.min.css")" />
+
+
+</head>
+
+@main("Welcome to PacTrac") {
+   
+      <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../">PacTrac</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a href="../">Home</a></li>
+              <li><a href="../about.html">About</a></li>
+              <li><a href="#download">Download</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+            @if(user != null){
+            <a class="btn btn-success disabled">Sign in</a>
+            <a class="btn btn-success" href="/dev/logout.html">Logout</a>
+            <a class="btn btn-primary disabled">Sign up</a>
+          }else{
+          <a class="btn btn-success" href="/dev/login.html">Sign in</a>
+          <a class="btn btn-primary" href="/dev/register.html">Sign up</a>
+        }
+            
+            <ul class="nav pull-right">
+            @if(user != null){
+            <dt>Welcome, @user.getFirstName() @user.getLastName()</dt>
+            }
+          </ul>
+          </div><!--/.nav-collapse -->
+          
+        </div>
+      </div>
+    </div>
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message-->
+      <div class="hero-unit">
+        <h1>PacTrac Docs</h1>
+          <p>Only the best (not really, but kind of)</p>
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span12">
+          <h3>New to using PacTrac? You came to the right place.</h3>
+           <ol>
+           		<li><a href="#intro">Intro</a></li>
+           		<li><a href="#createAccount">Creating an account</a></li>
+           		<li><a href="#download">Downloading packages for each operating system </a></li>
+           		<ol>
+           			<li><a href="#downloadMac">Mac</a></li>
+           			<ol>
+           				<li><a href="#downloadMacWithout">Without our packages</a></li>
+           				<li><a href="#downloadMacWith">With our packages</a></li>
+           			</ol>
+           			<li><a href="#downloadWindows">Windows</a></li>
+           			<li><a href="#downloadLinux">Linux</a></li> 
+           		</ol>
+           		<li><a href="#integration">Integrating with your app</a></li>
+           		<ol>
+           			<li><a href="#integrationMac">Integrating with Mac</a></li>
+           			<li><a href="#integrationWindows">Integrating with Windows</a></li>
+           			<li><a href="#integrationLinux">Integrating with Linux</a></li>
+           		</ol>
+           		<li><a href="#lifecycle">Lifecycle of an app</a></li>
+           		<ol>
+           			<li><a href="#firstTime">First time of application launch</a></li>
+           			<li><a href="#usualTime">Later uses</a></li>
+           		</ol>
+           		<li><a href="#data">Data</a></li>
+           		<ol>
+           			<li><a href="#dataValid">Data that CAN be sent</a></li>
+           			<li><a href="#dataNotValid">Data that can NOT be sent</a></li>
+           		</ol>
+        </div>
+      </div>
+
+      <a name="intro"></a>
+      <h2>Intro</h2>
+      <p>Welcome to PacTrac! We hope you enjoy our software. So what is PacTrac? PacTrac aims to provide a middleground SDK that analyzes emotional data from multiple input sources, such as sweat-detecting wristbands, <a href="http://www.emotiv.com/">EPOC headsets</a>, and webcams. PacTrac takes in data from these sources and analyzes each set of data, causing a developer to receive one uniform set of data for later use, such as tracking most-popular apps on a computer from multiple sources or a desktop that personalizes itself to the mood given. And the best part? All of the processing is done server-side. All you need to do is send a <a href="http://www.json.org/">JSON</a> array, and we'll store the data, analyze it with previous data and current data, and return requests that you send within the <a href="http://www.json.org/">JSON</a>. It's that simple. Or, if you feel uncomfortable storing your data on our side of the server, you can download the free server-side code on our repositories.</p>
+
+      <a name="createAccount"></a>
+      <h2>Creating an account</h2>
+	      <p>Creating an account is <i>free and simple</i>. All you need to do is give us your email, password, first name and last name. There <i>is</i> only one account per email, though, due to litmitations with storage. However, each user is allowed to have five applications on his or her account, with unlimited clients for each application.
+	      </p>
+	  </br>
+	  <h5>Directions for creating an account</h5>
+	      <ol>
+	      	<li> Go up to the top of the page.</li>
+	      	<li> Click on the "Sign up" button</li>
+	      	<li> Enter the appropriate information in each field </li>
+	      	<li>After being brought to a "Registration Confirmed" page, you'll have an account! </li>
+	      	<li> Sign in at the top of the page (no email confirmation, don't worry)</li>
+	      </ol>
+	  <p> Once you've created your account, you want to go ahead and create applications. Each application will have its name and UUID (we'll explain this later) displayed in your home page.</p>
+	  <h5>How to create an app</h5>
+	  <ol>
+	  	<li>Enter the name of your app.</li>
+	  	<li>Click "Create app"</li>
+	  </ol>
+	  <p>Yep. It's that simple to create an app. Don't worry, we'll keep track of the amount of apps you have, so you can't go overboard.</p>
+
+	  <a name="download"></a>
+	  <h2>Downloading packages for each operating system</h2>
+	  <p>So you're probably wondering, "If this is all server side, why should I need to download a package?" The packages we've created are meant to expidite and optimize your packaging systems. We've created a Mac package so far, which should be easily integratible into your application. You shouldn't need to do a ton of work to unify all of the data you're trying to send us.</p>
+	  <a name="downloadMac"></a>
+	  <h5>Mac Packages</h5>
+	  <p>Mac Packages can be downloaded on our github repository. The client-side code is stroed in an Xcode Project filetype. So, our framework should work out of the box if you just drag and drop our project into your application.</p>
+
+	  	<a name="downloadWindows"></a>
+	  	<h5>Windows Packages</h5>
+	  	<p>We don't currently have any helper Windows development files, but you can still send us data through a <a href="http://www.json.org/">JSON</a> request.</p>
+
+	  	<a name="downloadLinux"></a>
+	  	<h5>Linux Packages</h5>
+	  	<p>Linux packages are in development, but for the time-being, it looks like you guys are in the same boat as the Windows developers (see above). Sorry.</p>
+
+	  	<a name="integration"></a>
+	  	<h2>Integrating with your app</h2>
+	  	<p>Integration takes little to no work, solely because all you need to do is put the data you're receiving in a <a href="http://www.json.org/">JSON</a> array and ship it to http://www.pac.trac/detect.json. We'll automatically ship back the results you ask for once we compute them.
+
+	  	<a name="integrationMac"></a>
+	  	<h5>Integrating with your Mac app</h5>
+
+	  	<a name="integrationMacWithout"></a>
+	  	<h6>Without our package</h6>
+	  	<p> If you're not using our wrapper class, then we would recommend using either <a href="http://allseeing-i.com/ASIHTTPRequest/">ASIHTTPRequest</a> or <a href="https://github.com/MugunthKumar/MKNetworkKit">MKNetworkKit</a> to send and receive data. We would recommend using <a href="http://stig.github.com/json-framework/">SBJSON</a> to package and receive <a href="http://www.json.org/">JSON</a> requests. Just send us your data, and we'll send you back results.
+	  	</p>
+
+	  	<a name="integrationMacWith"></a>
+	  	<h6>Without package</h6>
+	  	<p>If you are using our package, you can just drag-and-drop our file into your project. There should be zero configuration necessary to run our SDK. And it's all open-source!</p>
+	  	<h6>x86 vs. x86-64</h6>
+	  <p>Our Xcode project file is configured to run only in x86-64. But this can easily be changed to run in x86.</p>
+	  <ol>
+	  	<li>Go to the PacTrac Xcode Project File.</li>
+	  	<li>Click on the "Build Settings"</li>
+	  	<li>Find the "Deployment Architecture" setting</li>
+	  	<li>Change it to x86</li>
+	  </ol>
+
+	  	<a name="integrationWindows"></a>
+	  	<h5>Integrating with your Windows app</h5>
+	  	<p>From the data you receive, you want to send and receive <a href="http://www.json.org/">JSON</a> requests at certain trigger points. Just send your info to our server at http://www.pac.trac/detect.json. We'll send you back a result when it comes in.</p>
+
+	  	<a name="integrationLinux"></a>
+	  	<h5>Integrating with your Linux app</h5>
+	  	<p>From the data you receive, you want to send and receive <a href="http://www.json.org/">JSON</a> requests at certain trigger points. Just send your info to our server at http://www.pac.trac/detect.json. We'll send you back a result when it comes in.</p>
+
+	  	<a name="lifecycle"></a>
+	  	<h2>Lifecycle of a sample application</h2>
+	  	<p>The lifecycle of what you need to implement is actually quite simple. Gather your data, send it to our server, and we return the data. This section will discuss this process in a little more depth.</p>
+
+	  	</br>
+	  	<a name="firstTime"></a>
+	  	<h5>Lifecycle of an app running for the first time</h5>
+	  	<ol>
+	  		<li>The client sends a request to the server</li>
+	  		<li>The server checks if the  <a href="http://www.json.org/">JSON</a> array is valid</li>
+	  		<li>The server checks if the client is new or existing, using a UUID that the client saves (we promise, it's the ONLY thing the client needs to save)</li>
+	  		<li>Because the client is new, the server sends back a UUID</li>
+	  		<li>The client saves the UUID (if you're not using our packages, then you need to do this manually)</li>
+	  		<li>The client sends another request</li>
+	  		<li>The server checks if the  <a href="http://www.json.org/">JSON</a> array is valid</li>
+	  		<li>The server sees the UUID now</li>
+	  		<li>The server processes the data by parsing whatever data it gets from the  <a href="http://www.json.org/">JSON</a> array sent to it</li>
+	  		<li>The server saves the data</li>
+	  		<li>The server sends back any info that the user requested</li>
+
+	  	</ol>
+
+	  	<a name="usualTime"></a>
+	  	<h5>Lifecycle of a previously used app</h5>
+	  	<ol>
+			<li>The client sends a request to the server</li>
+	  		<li>The server checks if the  <a href="http://www.json.org/">JSON</a> array is valid</li>
+	  		<li>The server checks if the client is new or existing, using a UUID that the client saves (we promise, it's the ONLY thing the client needs to save)</li>
+	  		<li>The server processes the data by parsing whatever data it gets from the  <a href="http://www.json.org/">JSON</a> array sent to it</li>
+	  		<li>The server saves the data</li>
+	  		<li>The server sends back any info that the user requested</li>
+	  	</ol>
+
+	  	<a name="data"></a>
+	  	<h2>Data</h2>
+	  	<p>We don't want to have to leave you guessing at what to send. In the same manner, we also don't want you sending random data to our server (it's bad for both us at PacTrac and you). So, below is a list of what you can and can not send to our servers:</p>
+
+	  	<a name="dataValid"></a>
+	  	<h5>Valid data</h5>
+
+	  	<a name="dataNotValid"></a>
+	  	<h5>Invalid data</h5>
+
+      <hr>
+
+      <footer>
+      	<p>
+      		Created by Matthew Daiter at the 
+        	<a href="http://media.mit.edu/">MIT Media Labs</a>
+        </p>
+      </footer>
+
+    </div>
+<!-- Javascript stuff -->
+
+	<script src="@routes.Assets.at("javascripts/bootstrap-alert.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/bootstrap-button.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/bootstrap-carousel.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/bootstrap-collapse.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/bootstrap-dropdown.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/bootstrap-modal.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/bootstrap-popover.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/bootstrap-scrollspy.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/bootstrap-tab.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/bootstrap-tooltip.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/bootstrap-transition.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/bootstrap-typeahead.min.js")"></script>
+}

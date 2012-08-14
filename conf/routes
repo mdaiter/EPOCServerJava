@@ -1,0 +1,34 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET     /                           controllers.Application.index()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+#JSONController
+POST	/detect.json		    	controllers.JSONController.generate()
+GET		/detect.json		    	controllers.JSONController.index()
+
+#About page
+GET 	/about.html					controllers.Application.about()
+
+#Login pages
+GET 	/dev/login.html				controllers.LoginPage.index()
+POST	/dev/login.html				controllers.LoginPage.login()
+GET 	/dev/home.html				controllers.UserController.index()
+POST	/dev/home.html				controllers.UserController.attemptCreateNewApp() 
+GET 	/dev/newApp.html			controllers.NewApp.index()
+GET 	/dev/register.html			controllers.RegisterController.index()
+POST 	/dev/register.html			controllers.RegisterController.register()
+
+#In case anyone's dumb enough to do this
+GET 	/dev						controllers.LoginPage.index()
+GET 	/dev/						controllers.LoginPage.index()
+
+#Logout page
+GET 	/dev/logout.html 		controllers.LoginPage.logout()
+
+#Documentation
+GET 	/docs/index.html		controllers.Documentation.index()

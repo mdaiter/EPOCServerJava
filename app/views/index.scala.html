@@ -1,0 +1,106 @@
+@(user: User)
+
+@import helper._;
+
+<head>
+	<!-- Meant for stylesheet from bootstrap. Thank you bootstrap. I owe you one. -->
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")" />
+
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-responsive.min.css")" />
+
+
+</head>
+
+@main("Welcome to PacTrac") {
+   
+      <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">PacTrac</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="#download">Download</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+            @if(user != null){
+            <a class="btn btn-success disabled">Sign in</a>
+            <a class="btn btn-success" href="/dev/logout.html">Logout</a>
+            <a class="btn btn-primary disabled">Sign up</a>
+          }else{
+          <a class="btn btn-success" href="/dev/login.html">Sign in</a>
+          <a class="btn btn-primary" href="/dev/register.html">Sign up</a>
+        }
+            
+            <ul class="nav pull-right">
+            @if(user != null){
+            <dt>Welcome, @user.getFirstName() @user.getLastName()</dt>
+            }
+          </ul>
+          </div><!--/.nav-collapse -->
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message-->
+      <div class="hero-unit">
+        <h1>Meet PacTrac.</h1>
+          <p>PacTrac is an SDK that lets developers track which applications are most popular, hated, etc. on their clients' computers. It is easily integratable into current Mac OS X projects, and Linux versions are coming soon.</p>
+          @if(user == null){
+          <p><a class="btn btn-primary btn-large" href="/dev/register.html">Try it out (we don't bite, we promise!) &raquo;</a></p>
+        }else{
+        <p><a class="btn btn-primary btn-large" href="/dev/home.html">Go to your home page!</a></p>
+      }
+        <h6>Already a member?</h6>
+        @if(user == null){
+        <p><a class="btn" href="/dev/login.html">Login! &raquo;</a></p>
+      }else{
+      <p><a class="btn disabled">You're already logged in!</a></p>
+    }
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span6">
+          <h2>About us</h2>
+           <p>
+            This was created as a way of letting entrepreneurs and developers of keeping track of certain applications clients used, in order to have the ability to respond effectively.
+           </p>
+          <p><a class="btn" href="about.html">Check out our awesome about page! &raquo;</a></p>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+      	<p>
+      		Created by Matthew Daiter at the 
+        	<a href="http://media.mit.edu/">MIT Media Labs</a>
+        </p>
+      </footer>
+
+    </div>
+<!-- Javascript stuff -->
+
+<script src="@routes.Assets.at("javascripts/bootstrap-alert.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-button.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-carousel.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-collapse.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-dropdown.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-modal.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-popover.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-scrollspy.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-tab.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-tooltip.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-transition.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-typeahead.min.js")"></script>
+}

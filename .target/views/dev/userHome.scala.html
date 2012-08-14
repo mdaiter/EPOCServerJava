@@ -1,0 +1,155 @@
+@(user: User, newAppForm: Form[UserApp], error: String)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+<head>
+	<!-- Meant for stylesheet from bootstrap. Thank you bootstrap. I owe you one. -->
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")" />
+
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-responsive.min.css")" />
+
+
+</head>
+
+@if(user != null){
+	<div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">PacTrac</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a href="../">Home</a></li>
+              <li><a href="../about.html">About</a></li>
+              <li><a href="#download">Download</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+            @if(user != null){
+            <a class="btn btn-success disabled">Sign in</a>
+            <a class="btn btn-success" href="/dev/logout.html">Logout</a>
+            <a class="btn btn-primary disabled">Sign up</a>
+          }else{
+          <a class="btn btn-success" href="/dev/login.html">Sign in</a>
+          <a class="btn btn-primary" href="/dev/register.html">Sign up</a>
+        }
+            
+            <ul class="nav pull-right">
+            @if(user != null){
+            <dt>Welcome, @user.getFirstName() @user.getLastName()</dt>
+            }
+          </ul>
+          </div><!--/.nav-collapse -->
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message-->
+      <div class="hero-unit">
+        <h1>Your home.</h1>
+          <p>Welcome back, @user.getFirstName() @user.getLastName()!</p>
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span6">
+          <h2>Your apps:</h2>
+          @if(user.getUserAppHash() != null){
+           @for(p <- user.getUserAppHash().values()){
+           <p>@p.getappUUID() : @p.getAppNam()</p>
+       }
+       <p>@user.getUserAppHash().size()</p>
+   }else{
+   <p>You don't have any apps :(</p>
+}
+@if(user.getSizeUserAppHash() != null){
+<p>You have @(5-user.getSizeUserAppHash()) apps left on your account </p>
+@if(error != null){
+<p>Error: @error</p>
+}
+}else{
+  <p>You have 5 apps left on your account</p>
+}
+        </div>
+        <div class="span6">
+        		    	<fieldset>
+	    				@helper.form(action = routes.UserController.attemptCreateNewApp(), 'class -> "well"){
+	              			<legend>Create a new app:</legend>
+	              			@inputText(
+	        					newAppForm("appNam"),
+	        					'_label -> "App name",
+	        					'_help -> "",
+	        					'_error -> newAppForm.globalError
+	        					)
+	        				<input type="submit" class="btn btn-primary" value="Create a new app &raquo;">
+	              		}
+	              	</fieldset>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+      	<p>
+      		Created by Matthew Daiter at the 
+        	<a href="http://media.mit.edu/">MIT Media Labs</a>
+        </p>
+      </footer>
+
+    </div>
+<!-- Javascript stuff -->
+
+<script src="@routes.Assets.at("javascripts/bootstrap-alert.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-button.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-carousel.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-collapse.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-dropdown.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-modal.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-popover.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-scrollspy.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-tab.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-tooltip.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-transition.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap-typeahead.min.js")"></script>
+}else{
+	@main("Trying to access home") {
+    <!-- Navbar -->
+    <div class="navbar navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </a>
+              <a class="brand" href="../">PacTrac</a>
+              <div class="nav-collapse">
+                <ul class="nav">
+                  <li><a href="/">Home</a></li>
+                  <li><a href="../about.html">About</a></li>
+                  <li><a href="#download">Download</a></li>
+                  <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a class="btn btn-success" href="login.html">Sign in</a>
+                <a class="btn btn-primary" href="register.html">Sign up</a>
+              </div><!--/.nav-collapse -->
+            </div>
+          </div>
+    </div>
+
+        <div class="container">
+            <div class="hero-unit">
+                <h1>Wait...but...are you logged in?</h1>
+                <p>You thought you could just waltz in to the <emph>Members only</emph> home?</p>
+                <p>Cough...loser...cough...</p>
+            </div>
+        </div>
+}
+}

@@ -1,0 +1,102 @@
+@(loginForm: Form[User], error: String, user: User)
+
+@import helper._
+<head>
+	<!-- Meant for stylesheet from bootstrap. Thank you bootstrap. I owe you one. -->
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")" />
+
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-responsive.min.css")" />
+
+
+</head>
+
+@if(user == null){
+	@main("Login") {
+		<div class="navbar navbar-fixed-top">
+		      <div class="navbar-inner">
+		        <div class="container">
+		          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		          </a>
+		          <a class="brand" href="/">PacTrac</a>
+		          <div class="nav-collapse">
+		            <ul class="nav">
+		              <li><a href="/">Home</a></li>
+		              <li><a href="../about.html">About</a></li>
+		              <li><a href="#download">Download</a></li>
+		              <li><a href="#contact">Contact</a></li>
+		            </ul>
+		            <a class="btn btn-success disabled">Sign in</a>
+	             	<a class="btn btn-primary" href="register.html">Sign up</a>
+		          </div><!--/.nav-collapse -->
+		        </div>
+		      </div>
+		</div>
+
+		<div class="container">
+			<div class="hero-unit">
+	        	<h1>Login!</h1>
+	        	<p>You need to in order to use the site</p>
+	        </div>
+	    	<div class="row">
+	    		<div class="span12">
+	    			<fieldset>
+	    				@helper.form(action = routes.LoginPage.login(), 'class -> "well"){
+	              			<legend>Login</legend>
+	              			@inputText(
+	        					loginForm("username"),
+	        					'_label -> "Email",
+	        					'_help -> "",
+	        					'_error -> loginForm.globalError
+	        					)
+	        					@inputPassword(
+	        						loginForm("password"),
+	        						'_label -> "Password",
+	        						'_help -> "",
+	        						'_error -> loginForm.globalError
+	        					)
+	        					
+	        				<input type="submit" class="btn btn-primary" value="Login">
+	        				<h6>@error</h6>
+	              		}
+	              	</fieldset>
+	    		</div>
+	    	</div>
+	    </div>
+	}
+}else{
+	@main("Trying to login for PacTrac") {
+    <!-- Navbar -->
+    <div class="navbar navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </a>
+              <a class="brand" href="/">PacTrac</a>
+              <div class="nav-collapse">
+                <ul class="nav">
+                  <li><a href="/">Home</a></li>
+                  <li><a href="../about.html">About</a></li>
+                  <li><a href="#download">Download</a></li>
+                  <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a class="btn btn-success" href="login.html">Sign in</a>
+                <a class="btn btn-primary disabled">Sign up</a>
+              </div><!--/.nav-collapse -->
+            </div>
+          </div>
+    </div>
+
+        <div class="container">
+            <div class="hero-unit">
+                <h1>Hahahahaha!</h1>
+                <p>You thought you could just log in again...we're not that dumb.</p>
+            </div>
+        </div>
+	}
+}

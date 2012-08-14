@@ -1,0 +1,103 @@
+@(user: User)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+<head>
+	<!-- Meant for stylesheet from bootstrap. Thank you bootstrap. I owe you one. -->
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")" />
+
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-responsive.min.css")" />
+
+
+</head>
+
+@if(user != null){
+	<div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">PacTrac</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a href="../">Home</a></li>
+              <li><a href="../about.html">About</a></li>
+              <li><a href="#download">Download</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+            @if(user != null){
+            <a class="btn btn-success disabled">Sign in</a>
+            <a class="btn btn-success" href="/dev/logout.html">Logout</a>
+            <a class="btn btn-primary disabled">Sign up</a>
+          }else{
+          <a class="btn btn-success" href="/dev/login.html">Sign in</a>
+          <a class="btn btn-primary" href="/dev/register.html">Sign up</a>
+        }
+        </div><!--/.nav-collapse -->
+          
+        </div>
+      </div>
+    </div>
+
+     <div class="container">
+
+      <!-- Main hero unit for a primary marketing message-->
+      <div class="hero-unit">
+        <h1>You just created a new app!</h1>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <h2>Your apps:</h2>
+          @if(user.getUserAppHash() != null){
+           @for(p <- user.getUserAppHash().values()){
+           <p>@p.getappUUID() : @p.getAppNam()</p>
+       }
+       <p>@user.getUserAppHash().size()</p>
+   }else{
+   <p>You don't have any apps :(</p>
+}
+<p>You have @(5-user.getSizeUserAppHash()) apps left on your account </p>
+
+    </div>
+  </div>
+</div>
+}else{
+  @main("Trying to create a new app") {
+    <!-- Navbar -->
+    <div class="navbar navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </a>
+              <a class="brand" href="../">PacTrac</a>
+              <div class="nav-collapse">
+                <ul class="nav">
+                  <li><a href="/">Home</a></li>
+                  <li><a href="../about.html">About</a></li>
+                  <li><a href="#download">Download</a></li>
+                  <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a class="btn btn-success" href="login.html">Sign in</a>
+                <a class="btn btn-primary" href="register.html">Sign up</a>
+              </div><!--/.nav-collapse -->
+            </div>
+          </div>
+    </div>
+
+        <div class="container">
+            <div class="hero-unit">
+                <h1>Wait...but...are you logged in?</h1>
+                <p>You thought you could just waltz in to the <emph>Members only</emph> home?</p>
+                <p>Cough...loser...cough...</p>
+            </div>
+        </div>
+}
+}
