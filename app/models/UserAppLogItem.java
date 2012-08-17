@@ -13,7 +13,7 @@ import javax.persistence.*;
 
 @Entity
 public class UserAppLogItem extends Model {
-		
+	
 	@Required
 	@Temporal(TemporalType.DATE)
 	@Column(name="date")

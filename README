@@ -1,4 +1,17 @@
-This is your new Play 2.0 application
+EmoBytes!
 =====================================
 
-This file will be packaged with your application, when using `play dist`.
+EmoBytes is an easy solution to storing massive amounts of data connected to dates and other attributes remotely!
+
+Setup
+=====================================
+Setup is easy! All you need to do is: 
+1. Install Play! Framework (http://www.playframework.org/) 
+2. Download this bundle 
+3. Navigate to the file directory within Terminal 
+4. Run the command: play 'run 8079' 
+5. You're up and running! 
+
+To make sure you're up, navigate to 'localhost:8079' within your browser of preference.
+You should see a screen asking you to do an evolution (modify the tables). Just click yes.
+Then you'll be taken to your main page!
