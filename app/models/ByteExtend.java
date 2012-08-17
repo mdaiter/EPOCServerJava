@@ -12,7 +12,7 @@ import play.db.ebean.Model;
 public class ByteExtend extends Model{
 	
 	/**
-	 * 
+	 * Generated serial UID
 	 */
 	private static final long serialVersionUID = 2755606310239588719L;
 

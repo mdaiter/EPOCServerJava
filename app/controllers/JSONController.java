@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,7 +10,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Locale;
 
+import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
@@ -64,6 +68,23 @@ public class JSONController extends Controller{
 		else {
 			//Set modeler to process and store JSON stuff...
 			ObjectNode n = JSONController.processJSON(request().body().asJson(), result);
+			
+			ObjectMapper mapper = new ObjectMapper();
+			
+			try{
+				return ok(mapper.defaultPrettyPrintingWriter()
+						.writeValueAsString(n));
+			}
+			catch (JsonGenerationException e){
+				e.printStackTrace();
+			}
+			catch (JsonMappingException e){
+				e.printStackTrace();
+			}
+			catch (IOException e){
+				e.printStackTrace();
+			}
+			
 			return ok(n);
 		}
 	}
@@ -108,15 +129,17 @@ public class JSONController extends Controller{
 		return objN;
 	}
 	
-	public static void putKeysAndValuesInJSON(String emoList, ObjectNode oN, String appName, ClientAppLog clientApp, boolean isDate, Date beginDate, Date endDate, JsonNodeFactory factory, boolean isAverage){
+	public static void putKeysAndValuesInJSON(String emoList, ObjectNode oN, JsonNode appName, ClientAppLog clientApp, boolean isDate, Date beginDate, Date endDate, JsonNodeFactory factory, boolean isAverage){
 		ArrayNode timeBundler = new ArrayNode(factory);
+		//System.out.println("AppName array is: " + appName + "and isArray() = " + appName.isArray());
 		if (emoList.equals("All")){
+			System.out.println("emoList = All");
 			for (UserAppLogItem i : clientApp.getAppToEmotion().values()){
 				System.out.println(i);
 				System.out.println("Keys are: " + i.getEmotions().keySet());
 				System.out.println("Values are: " + i.getEmotions().values());
 				ArrayNode arrAttrBundler = new ArrayNode(factory);
-												
+				
 				for (Long key : i.getEmotions().keySet()){
 					System.out.println("Going through keyset with key: " + key + " " + i.getEmotions().get(key).getByte());
 					ObjectNode obj = new ObjectNode(factory);
@@ -132,8 +155,9 @@ public class JSONController extends Controller{
 					
 					arrAttrBundler.add(obj);
 				}
+				System.out.println("isDate : "+isDate);
 				if (isDate == false){
-					
+					System.out.println("isDate = false");
 					if (i.getAppName() != null && !i.getAppName().isEmpty()){
 						ObjectNode appNameObj = new ObjectNode(factory);
 						appNameObj.put("appName", i.getAppName());
@@ -141,14 +165,18 @@ public class JSONController extends Controller{
 					}
 					
 					ObjectNode timeObj = new ObjectNode(factory);
-					if (appName != null && !appName.isEmpty()){
-						if (appName.equals(i.getAppName())){
-							timeObj.put(i.getDateOfRecording().toString(), arrAttrBundler);	
-							timeBundler.add(timeObj);
-							System.out.println("New timeBundler: " + timeBundler);
-						}
-						else{
-							System.out.println("Not the right name for the application");
+					if (appName != null && appName.isArray() && appName.size() > 0){
+						System.out.println("appName is an array");
+						for (int z = 0; z < appName.size(); z++){
+							System.out.println("appName value is: " + appName.get(z).asText());
+							if (appName.get(z).asText().equals(i.getAppName())){
+								timeObj.put(i.getDateOfRecording().toString(), arrAttrBundler);	
+								timeBundler.add(timeObj);
+								System.out.println("New timeBundler: " + timeBundler);
+							}
+							else{
+								System.out.println("Not the right name for the application");
+							}
 						}
 					}
 					else{
@@ -165,11 +193,13 @@ public class JSONController extends Controller{
 						arrAttrBundler.add(appNameObj);
 					}
 					ObjectNode timeObj = new ObjectNode(factory);
-					if (appName != null && !appName.isEmpty()){
-						if (appName.equals(i.getAppName())){
-							timeObj.put(i.getDateOfRecording().toString(), arrAttrBundler);	
-							timeBundler.add(timeObj);
-							System.out.println("New timeBundler: " + timeBundler);
+					if (appName != null && appName.isArray()){
+						for (JsonNode stringNode : appName){
+							if (stringNode.asText().equals(i.getAppName())){
+								timeObj.put(i.getDateOfRecording().toString(), arrAttrBundler);	
+								timeBundler.add(timeObj);
+								System.out.println("New timeBundler: " + timeBundler);
+							}
 						}
 					}
 					else{
@@ -226,14 +256,16 @@ public class JSONController extends Controller{
 								arrAttrBundler.add(appNameObj);
 							}
 							ObjectNode timeObj = new ObjectNode(factory);
-							if (appName != null && !appName.isEmpty()){
-								System.out.println("App name specified: " + appName);
-								if (appName.equals(i.getAppName())){
-									timeObj.put(i.getDateOfRecording().toString(), arrAttrBundler);	
-									timeBundler.add(timeObj);
-								}
-								else{
-									System.out.println("Match " + appName + " with " + i.getAppName() + "was: " + new Boolean(appName.equals(i.getAppName())));
+							if (appName != null && appName.isArray()){
+								for (JsonNode stringNode : appName){
+									System.out.println("App name specified: " + stringNode.asText());
+									if (stringNode.asText().equals(i.getAppName())){
+										timeObj.put(i.getDateOfRecording().toString(), arrAttrBundler);	
+										timeBundler.add(timeObj);
+									}
+									else{
+										System.out.println("Match " + appName + " with " + i.getAppName() + "was: " + new Boolean(appName.equals(i.getAppName())));
+									}
 								}
 							}
 							else{
@@ -268,22 +300,23 @@ public class JSONController extends Controller{
 			System.out.println("UserAll equals true");
 			if (appNameJson != null){
 				for (ClientAppLog c : clientApp.getuApp().getClientLogItems().values()){
-					JSONController.putKeysAndValuesInJSON(emoList, oN, appNameJson.asText(), c, isDate, beginDate, endDate, factory, isAverage);
+					System.out.println();
+					JSONController.putKeysAndValuesInJSON(emoList, oN, appNameJson, c, isDate, beginDate, endDate, factory, isAverage);
 				}
 			}
 			else{
 				for (ClientAppLog c : clientApp.getuApp().getClientLogItems().values()){
-					JSONController.putKeysAndValuesInJSON(emoList, oN, new String(), c, isDate, beginDate, endDate, factory, isAverage);
+					JSONController.putKeysAndValuesInJSON(emoList, oN, null, c, isDate, beginDate, endDate, factory, isAverage);
 				}
 			}
 		}
 		else{
 			System.out.println("UserAll equals false");
 			if (appNameJson != null){
-				JSONController.putKeysAndValuesInJSON(emoList, oN, appNameJson.asText(), clientApp, isDate, beginDate, endDate, factory, isAverage);
+				JSONController.putKeysAndValuesInJSON(emoList, oN, appNameJson, clientApp, isDate, beginDate, endDate, factory, isAverage);
 			}
 			else{
-				JSONController.putKeysAndValuesInJSON(emoList, oN, new String(), clientApp, isDate, beginDate, endDate, factory, isAverage);
+				JSONController.putKeysAndValuesInJSON(emoList, oN, null, clientApp, isDate, beginDate, endDate, factory, isAverage);
 			}
 		}
 	}
@@ -368,7 +401,29 @@ public class JSONController extends Controller{
 			
 			String clientUUID = jsonMod.getJSON().findValue("clientUUID").toString();
 			clientUUID = clientUUID.substring(1, clientUUID.length() - 1);
-			UserAppLogItem u = new UserAppLogItem(user.getUserAppHash().get(jsonMod.getUUIDFromJSON()).getClientLogItems().get(clientUUID));
+			
+			Date parsed = new Date();
+			
+			if (!jsonMod.getJSON().findValues("Date").isEmpty()){
+				if (!jsonMod.getJSON().findValues("ActualDate").isEmpty()){
+					System.out.println("Actual date found");
+					try {
+					    SimpleDateFormat format =
+					        new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+					    parsed = format.parse(jsonMod.getJSON().findValue("Date").asText());
+					}
+					catch(ParseException pe) {
+					    throw new IllegalArgumentException();
+					}
+				}
+				else{
+					System.out.println("Actual date not found...");
+					parsed = new Date(new Long(jsonMod.getJSON().findValue("Date").asText()));
+					System.out.println("Created date: " + parsed);
+				}
+			}
+			
+			UserAppLogItem u = new UserAppLogItem(user.getUserAppHash().get(jsonMod.getUUIDFromJSON()).getClientLogItems().get(clientUUID), parsed);
 			
 			u.save();
 			
@@ -435,27 +490,7 @@ public class JSONController extends Controller{
 				u.setAppName(jsonMod.getJSON().findValues("appName").get(0).asText());
 			}
 			
-			if (!jsonMod.getJSON().findValues("Date").isEmpty()){
-				if (!jsonMod.getJSON().findValues("ActualDate").isEmpty()){
-					Date parsed = new Date();
-					try {
-					    SimpleDateFormat format =
-					        new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-					    parsed = format.parse(jsonMod.getJSON().findValue("Date").asText());
-					}
-					catch(ParseException pe) {
-					    throw new IllegalArgumentException();
-					}
-					finally{
-						u.setDateOfRecording(parsed);
-					}
-				}
-				else{
-					Date parsed = new Date(jsonMod.getJSON().findValue("Date").asLong());
-					u.setDateOfRecording(parsed);
-				}
-			}
-			
+						
 			u.save();
 			
 			Ebean.find(UserAppLogItem.class, u.getDateOfRecording()).setEmotions(tempEPOCMap);

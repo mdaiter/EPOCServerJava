@@ -69,6 +69,15 @@ public class UserAppLogItem extends Model {
 		immediateFacialValues = new HashMap<Long, BooleanExtend>(face);
 	}
 	
+	public UserAppLogItem(ClientAppLog c, Date d){
+		dateOfRecording = d;
+		this.cAppLog = c;
+		timeHasRun = 0;
+		emotions = new HashMap<Long, ByteExtend>();
+		System.out.println("Just created emotable: " + emotions + " for userapplogitem: " + this);
+		immediateFacialValues = new HashMap<Long, BooleanExtend>();
+	}
+	
 	public void updateTime(Integer time){
 		timeHasRun+=time;
 	}
