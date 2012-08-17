@@ -15,3 +15,9 @@ Setup is easy! All you need to do is:
 To make sure you're up, navigate to 'localhost:8079' within your browser of preference.
 You should see a screen asking you to do an evolution (modify the tables). Just click yes.
 Then you'll be taken to your main page!
+
+(To Travis) 
+You need to setup the three components in this order: 
+1. Java server (this) 
+2. Pinger (JSONBackend) 
+3. NodeEPOC 
