@@ -21,3 +21,12 @@ You need to setup the three components in this order:
 1. Java server (this) 
 2. Pinger (JSONBackend) 
 3. NodeEPOC 
+
+Also, you need to create an account and an appUUID for yourself: 
+1. Signup 
+2. Go to your homepage 
+3. Create a new app 
+4. You should see the appUUID 
+5. Enter this command in Terminal: curl -i -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d '{"person":{"appUUID":"(Enter your appUUID here)", "clientUUID":"981"}, "Post":{"EPOC":{"Angry":"25", "Meditative":"16"}, "WebCam":{"isBlinking":"false"}}, "appName":"Internet Explorer", "email":"(Enter your email here)"}' localhost:8079/detect.json 
+6. You'll receive a clientUUID back. This will be your new clientUUID 
+7. Use your appUUID, clientUUID, and email for the next few steps.
